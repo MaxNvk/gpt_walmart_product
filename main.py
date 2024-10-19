@@ -1,17 +1,28 @@
 from flask import Flask, request, jsonify
 from swarm import Swarm
-from agents import product_info_agent, validation_agent, setup_completion_agent
+from src.config.agents import user_interface_agent, product_info_agent, validation_agent, setup_completion_agent
+from src.utils import prepare_success_response, prepare_error_response
 
 app = Flask(__name__)
 
 # Initialize Swarm client
 client = Swarm()
 
+@app.route("/get-initial-message", methods=["GET"])
+def get_initial_message():
+    response = client.run(
+        agent=user_interface_agent,
+        messages=[{"role": "user", "content": "Hi!"}]
+    )
+
+    return prepare_success_response({"message": response.messages[-1]["content"]})
+
+
 # Endpoint to process the product data through the agents
-@app.route('/process-product', methods=['POST'])
+@app.route("/process-product", methods=["POST"])
 def process_product():
     # Step 1: Get product data from the user request
-    product_data = request.json.get('data')
+    product_data = request.json.get("data")
 
     # Step 2: Product Info Agent gathers and structures the data
     product_info_response = client.run(
@@ -29,7 +40,7 @@ def process_product():
 
     # If validation fails, return an error message
     if "error" in validation_result.lower():
-        return jsonify({"status": "error", "message": validation_result}), 400
+        return prepare_error_response({"message": validation_result}), 400
 
     # Step 4: Finalize the setup with Setup Completion Agent
     setup_response = client.run(
@@ -39,7 +50,7 @@ def process_product():
     setup_result = setup_response.messages[-1]["content"]
 
     # Return the final result
-    return jsonify({
+    return prepare_success_response({
         "status": "success",
         "product_info": product_info,
         "validation_result": validation_result,
@@ -47,5 +58,5 @@ def process_product():
     })
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
