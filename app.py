@@ -1,6 +1,5 @@
 from flask import Flask
 from src.config.logging import configure_logging
-# from prometheus_flask_exporter import PrometheusMetrics
 from src.controllers.product_controller import product_blueprint
 from src.controllers.agent_controller import agent_blueprint
 import os
