@@ -40,6 +40,8 @@ packaging==24.1
 platformdirs==4.3.6
 pluggy==1.5.0
 pre_commit==4.0.1
+prometheus_client==0.21.0
+prometheus_flask_exporter==0.23.1
 propcache==0.2.0
 pydantic==2.9.2
 pydantic_core==2.23.4
