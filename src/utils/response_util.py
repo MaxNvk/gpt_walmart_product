@@ -9,5 +9,5 @@ def prepare_success_response(data: object):
 def prepare_error_response(error): 
     return jsonify({
         "success": False,
-        error: error
+        "error": error
     })
