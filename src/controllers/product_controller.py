@@ -4,6 +4,7 @@ from src.services.agent_service import process_product_data_async
 from src.utils.response_util import prepare_success_response, prepare_error_response
 from prometheus_client import Counter
 
+
 logger = logging.getLogger(__name__)
 
 product_blueprint = Blueprint('product_blueprint', __name__)
