@@ -3,8 +3,8 @@ from swarm import Agent
 user_interface_agent = Agent(
     # model="gpt-3.5-turbo",
     name="User Interface Agent",
-    instructions=f"""You are a user interface agent that handles all interactions with the user. 
-    You're interacting directly with user to get all the required information about the product and transfer it to info agent.""",
+    instructions=f"""You are the user interface agent responsible for gathering product information from the user and passing it to the info agent. Guide the user through questions to collect details (e.g., product name, category, features, pricing).
+At the end, convert the conversation into a JSON string, parse it, and prepare the data for the next agents. Ensure the JSON is clean, structured, and includes all relevant details for further processing.""",
 )
 
 product_info_agent = Agent(
