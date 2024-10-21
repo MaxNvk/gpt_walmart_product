@@ -7,6 +7,7 @@ import os
 from prometheus_client import make_wsgi_app
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from flasgger import Swagger
+from flask_cors import CORS
 
 
 # Set the environment variable to use the in-project folder
@@ -14,6 +15,8 @@ os.environ['PROMETHEUS_MULTIPROC_DIR'] = os.path.join(os.getcwd(), 'prometheus_d
 
 # Initialize Flask app
 app = Flask(__name__)
+
+CORS(app)
 
 swagger = Swagger(app, {
     "headers": [],
